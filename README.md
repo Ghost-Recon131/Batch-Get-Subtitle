@@ -1,18 +1,41 @@
-# Subtitle-Scripts
-## Pre-requisites
-### MKVToolNix needs to be installed to use my batch scripts
-### Python 3 or newer is needed for my python scripts
+# Batch-Get-Subtitle
+Designed to automate the process of getting & renaming each subtitle file downloaded from https://animetosho.org/
 
-## Batch muxing script
-### Batch file needs to be in the same file as your trying to combine
-### Filename of the video & subtitle needs to be the same
-By default, the subtitle type is .ass and video type is .mkv. These can be changed in Notepad or an IDE.
+Can also be used to get the chapter files for each episode. 
 
-## Locate & Rename scripts
-### Move and Rename:
-Most useful when downloaded subtitle files are located in their own subfolders and has the same name as subtitles in other folder. 
-### Rename Only
-Can be used to perform batch renaming using incrementing file names. ie That time I was reincarnated as a slime S1E1, That time I was reincarnated as a slime S1E2 ... That time I was reincarnated as a slime S1E25
-# Warning
-## There is no undo option if you make a mistake
-## Ensure the target folder only contains files you want to rename, any other file or folder inside will also get renamed
+
+## Limitations
+- Only works with 1 file type at once, cannot mix and match file types in source directory. 
+
+
+## Pre-requisite
+Python 3 required
+
+
+## Standard Usage
+Run the script and follow instructions in program
+
+
+# Input Redirection
+Input redirection can also be used to speed up the process, 2 examples have been provided in "Input Redirection Examples".
+
+Please use with a text file with the following details seperated by new line
+## Expected structure 
+- source directory
+- output directory
+- current file name (with file extension)
+- new file name (no file extension needed)
+- structure (can be left empty)
+
+
+## Windows
+```powershell
+Get-Content "subtitle details.txt" | ./"Move and Rename.py"
+Get-Content "chapter details.txt" | ./"Move and Rename.py"
+```
+
+## UNIX
+```shell
+"subtitle details.txt" > ./"Move and Rename.py"
+"chapter details.txt" > ./"Move and Rename.py"
+```

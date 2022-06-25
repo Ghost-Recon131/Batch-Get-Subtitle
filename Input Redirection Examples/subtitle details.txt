@@ -1,6 +1,5 @@
 C:\Users\henry\Downloads\Compressed\tmp
 C:\Users\henry\Downloads\Compressed\subs
-track5_eng
-.ass
+track5_eng.ass
 Isekai Maou Omega
 S2E
