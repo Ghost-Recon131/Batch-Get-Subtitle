@@ -5,7 +5,7 @@ Can also be used to get the chapter files for each episode.
 
 
 ## Limitations
-- Only works with 1 file type at once, cannot mix and match file types in source directory. 
+- Will encounter errors if there are multiple files with the same name but different extensions in the same directory.
 
 
 ## Pre-requisite
@@ -13,39 +13,27 @@ Python 3 required
 
 
 ## Standard Usage
-Run the script and follow instructions in program
+Add in details in "Batch-Get-Tool_config.ini". All fields for each section must be filled or the script will ignore the
+whole section. 
 
-
-# Input Redirection
-Input redirection can also be used to speed up the process, 2 examples have been provided in "Input Redirection Examples".
-
-Please use with a text file with the following details seperated by new line
-## Expected structure 
-- source directory
-- output directory
-- current file name (with file extension)
-- new file name (no file extension needed)
-- structure (can be left empty)
-- episode starting number ie start number on episode 1
+If the config file does not exist it will be created automatically. 
 
 
 ## Windows (Compiled Program)
 Running inside Powershell
 ```powershell
-Get-Content "subtitle details.txt" | ./"Main.exe"
-Get-Content "chapter details.txt" | ./"Main.exe"
+./"Main.exe"
 ```
 
 # Source File
-Project can also be run by having all 3 source files "Main.py", "MoveAndRename.py" and "InputValidation.py" in the same directory.
+Project can also be run by having all 3 source files "Main.py", "ConfigHandler.py" and "FileOperation.py" in the same directory.
 ## UNIX (Source file)
 ```shell
-./Main.py < "subtitle details.txt"
-./Main.py < "chapter details.txt"
+./Main.py 
 ```
 
 
 # PyInstaller Compilation
 ```shell
-python -m PyInstaller --hidden-import 'natsort' --onefile Main.py MoveAndRename.py InputValidation.py
+python -m PyInstaller --onefile Main.py ConfigHandler.py FileOperation.py
 ```
