@@ -84,3 +84,5 @@ nb-configuration.xml
 .DS_Store
 
 /Main.spec
+Batch-Get-Tool_config.ini
+Test/
