@@ -15,10 +15,10 @@ def main():
 
     if subtitle_config_values is not False and FileOperation.check_directories(subtitle_config_values):
         result = FileOperation.find_and_copy_file(subtitle_config_values)
-        logging.info(f"Copy subtitle result: {result}")
+        logging.info(f"Copy subtitle success: {result}")
     if chapter_config_values is not False and FileOperation.check_directories(chapter_config_values):
         result = FileOperation.find_and_copy_file(chapter_config_values)
-        logging.info(f"Copy chapter result: {result}")
+        logging.info(f"Copy chapter success: {result}")
 
 
 # Initiate script

@@ -44,13 +44,15 @@ def check_directory_empty(output_directory):
 # Locates the files then copies them
 def find_and_copy_file(subtitle_config_values):
     copy_success = True
-    no_files_found = True
+    no_files_found = False
     file_directory, output_directory, search_name, output_name, structure, episode_value = subtitle_config_values
     episode_value_counter = int(episode_value)
     try:
         for root, dirs, files in os.walk(file_directory):
             for file in files:
-                if file == search_name:
+                filename, extension = os.path.splitext(file)
+                search_name, search_name_extension = os.path.splitext(search_name)
+                if filename == search_name:
                     file_path = os.path.join(root, file)
                     final_output_name = output_name + " " + structure + str(episode_value_counter) + str(
                         pathlib.Path(file_path).suffix)
@@ -58,7 +60,7 @@ def find_and_copy_file(subtitle_config_values):
                     shutil.copy2(file_path, output_path)
                     episode_value_counter += 1
                     successfully_copied = True if os.path.isfile(output_path) else False
-                    no_files_found = False
+                    no_files_found = True
 
                     # Generate debug information
                     original_file_size_mib = os.path.getsize(file_path) / (1024 * 1024)
@@ -68,7 +70,7 @@ def find_and_copy_file(subtitle_config_values):
                     Output Path: {output_path} | Copied File Size: {copied_file_size_mib}
                     Successfully Copied: {successfully_copied}
                     """)
-                    logger.debug(debug_info)
+                    # logger.debug(debug_info)
     except Exception as e:
         copy_success = False
         logger.exception(f"Failed to locate & copy file: {e}")
