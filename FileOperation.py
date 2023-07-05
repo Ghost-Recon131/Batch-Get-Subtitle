@@ -47,11 +47,11 @@ def find_and_copy_file(subtitle_config_values):
     no_files_found = False
     file_directory, output_directory, search_name, output_name, structure, episode_value = subtitle_config_values
     episode_value_counter = int(episode_value)
+    search_name, search_name_extension = os.path.splitext(search_name)
     try:
         for root, dirs, files in os.walk(file_directory):
             for file in files:
                 filename, extension = os.path.splitext(file)
-                search_name, search_name_extension = os.path.splitext(search_name)
                 if filename == search_name:
                     file_path = os.path.join(root, file)
                     final_output_name = output_name + " " + structure + str(episode_value_counter) + str(
