@@ -45,15 +45,47 @@ def check_directory_empty(output_directory):
 def find_and_copy_file(subtitle_config_values):
     copy_success = True
     no_files_found = False
-    file_directory, output_directory, search_name, output_name, structure, episode_value = subtitle_config_values
+
+    if len(subtitle_config_values) == 7:
+        (file_directory, output_directory, attachment_output_directory, search_name, output_name,
+         structure, episode_value) = subtitle_config_values
+    else:
+        attachment_output_directory = None
+        (file_directory, output_directory, search_name, output_name,
+         structure, episode_value) = subtitle_config_values
+
     episode_value_counter = int(episode_value)
     search_name, search_name_extension = os.path.splitext(search_name)
+
     try:
         for root, dirs, files in os.walk(file_directory):
             for file in files:
                 filename, extension = os.path.splitext(file)
                 if filename == search_name:
                     file_path = os.path.join(root, file)
+
+                    if attachment_output_directory is not None:
+                        # Check for an "attachments" folder in the same directory
+                        try:
+                            attachments_folder = os.path.join(root, "attachments")
+                            logging.debug(f"attachments_folder: {attachments_folder}")
+                            if not os.path.exists(attachment_output_directory):
+                                os.makedirs(attachment_output_directory)
+
+                            # Copy each file from the attachments folder to the destination folder
+                            for attachment_file in os.listdir(attachments_folder):
+                                attachment_file_path = os.path.join(attachments_folder, attachment_file)
+                                destination_file_path = os.path.join(attachment_output_directory, attachment_file)
+
+                                # Skip if a file with the same name already exists
+                                if not os.path.exists(destination_file_path):
+                                    shutil.copy2(attachment_file_path, destination_file_path)
+                        except Exception as e:
+                            logger.warning(f"Failed to copy attachment files. Error: {e}")
+                    else:
+                        pass
+
+                    # Continue for subtitle / chapter files
                     final_output_name = output_name + " " + structure + str(episode_value_counter) + str(
                         pathlib.Path(file_path).suffix)
                     output_path = os.path.join(output_directory, final_output_name)
@@ -74,4 +106,6 @@ def find_and_copy_file(subtitle_config_values):
     except Exception as e:
         copy_success = False
         logger.exception(f"Failed to locate & copy file: {e}")
+
     return copy_success and no_files_found
+

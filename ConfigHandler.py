@@ -19,16 +19,17 @@ def load_subtitle_config():
             config.read(CONF_FILE_NAME)
             subtitle_file_directory = config["Subtitles"]["subtitle_file_directory"]
             subtitle_output_directory = config["Subtitles"]["subtitle_output_directory"]
+            attachment_output_directory = config["Subtitles"]["attachment_output_directory"]
             subtitle_file_name = config["Subtitles"]["subtitle_file_name"]
             subtitle_output_name = config["Subtitles"]["subtitle_output_name"]
             subtitle_structure = config["Subtitles"]["subtitle_structure"]
             subtitle_episode_value = config["Subtitles"]["subtitle_episode_value"]
 
-            if evaluate_variables(subtitle_file_directory, subtitle_output_directory, subtitle_file_name,
-                                  subtitle_output_name, subtitle_structure, subtitle_episode_value)  \
-                    and check_chapter_episode_value(subtitle_episode_value):
-                config_values = (subtitle_file_directory, subtitle_output_directory, subtitle_file_name,
-                                 subtitle_output_name, subtitle_structure, subtitle_episode_value)
+            if evaluate_variables(subtitle_file_directory, subtitle_output_directory, attachment_output_directory,
+                                  subtitle_file_name, subtitle_output_name, subtitle_structure,
+                                  subtitle_episode_value) and check_chapter_episode_value(subtitle_episode_value):
+                config_values = (subtitle_file_directory, subtitle_output_directory, attachment_output_directory,
+                                 subtitle_file_name, subtitle_output_name, subtitle_structure, subtitle_episode_value)
                 load_success = True
             else:
                 logger.info("Missing or incomplete subtitle configs")
@@ -117,6 +118,7 @@ def create_config_file():
         config["Subtitles"] = {
             "subtitle_file_directory": "",
             "subtitle_output_directory": "",
+            "attachment_output_directory": "",
             "subtitle_file_name": "",
             "subtitle_output_name": "",
             "subtitle_structure": "",
